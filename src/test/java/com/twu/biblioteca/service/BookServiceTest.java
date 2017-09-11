@@ -19,13 +19,13 @@ public class BookServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        service.addBook(new Book("book_no1"));
-        service.addBook(new Book("book_no2"));
-        service.addBook(new Book("book_no3"));
+        service.addBook(new Book("book_no1", "author1", 2012));
+        service.addBook(new Book("book_no2", "author2", 2015));
+        service.addBook(new Book("book_no3", "author3", 2014));
     }
 
     @Test
-    public void should_get_all_books_of_the_library() throws Exception {
+    public void should_get_all_books_in_the_library() throws Exception {
         List<Book> books = service.getAllBooks();
 
         assertThat(books.size(), is(3));
@@ -37,5 +37,15 @@ public class BookServiceTest {
         assertThat(titles.contains("book_no1"), is(true));
         assertThat(titles.contains("book_no2"), is(true));
         assertThat(titles.contains("book_no3"), is(true));
+    }
+
+    @Test
+    public void should_get_details_of_all_books_in_the_library() throws Exception {
+        Book book = service.getAllBooks().stream()
+                .filter(b -> b.getTitle().equals("book_no1"))
+                .findFirst().get();
+
+        assertThat(book.getAuthor(), is("author1"));
+        assertThat(book.getPublishYear(), is(2012));
     }
 }
