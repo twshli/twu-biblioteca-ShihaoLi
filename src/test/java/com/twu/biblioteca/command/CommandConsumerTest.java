@@ -16,4 +16,11 @@ public class CommandConsumerTest {
 
         assertThat(result.getMessage(), is(Message.MAIN_MENU));
     }
+
+    @Test
+    public void should_return_alert_message_when_input_invalid_option() throws Exception {
+        ExecResult result = new CommandConsumer().exec("xxxx");
+
+        assertThat(result.getMessage(), is(Message.ALERT_VALID_OPTION));
+    }
 }

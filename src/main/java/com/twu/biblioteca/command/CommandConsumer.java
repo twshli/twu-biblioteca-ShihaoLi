@@ -9,6 +9,6 @@ public class CommandConsumer {
         if (Command.INIT_APP.equals(command)) {
             return new ExecResult(Message.MAIN_MENU);
         }
-        return null;
+        return new ExecResult(Message.ALERT_VALID_OPTION);
     }
 }
