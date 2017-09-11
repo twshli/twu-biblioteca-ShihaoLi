@@ -4,13 +4,13 @@ package com.twu.biblioteca.model;
  * Created by Shli on 10/09/2017.
  */
 public class Book {
-    private final String name;
+    private final String title;
 
-    public Book(String name) {
-        this.name = name;
+    public Book(String title) {
+        this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 }

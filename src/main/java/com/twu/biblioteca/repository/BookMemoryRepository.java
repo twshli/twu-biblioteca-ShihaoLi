@@ -18,7 +18,7 @@ public class BookMemoryRepository implements BookRepository {
     }
 
     @Override
-    public List<Book> findAdd() {
+    public List<Book> findAll() {
         return books;
     }
 }

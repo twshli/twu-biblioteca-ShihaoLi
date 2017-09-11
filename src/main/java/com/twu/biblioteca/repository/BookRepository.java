@@ -10,5 +10,5 @@ import java.util.List;
 public interface BookRepository {
 
     void add(Book book);
-    List<Book> findAdd();
+    List<Book> findAll();
 }

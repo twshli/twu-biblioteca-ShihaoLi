@@ -29,14 +29,13 @@ public class BookServiceTest {
         List<Book> books = service.getAllBooks();
 
         assertThat(books.size(), is(3));
-        assertThat(findBooksByName(books, "book_no1").size(), is(1));
-        assertThat(findBooksByName(books, "book_no2").size(), is(1));
-        assertThat(findBooksByName(books, "book_no3").size(), is(1));
-    }
 
-    private List<Book> findBooksByName(List<Book> books, String name) {
-        return books.stream()
-                .filter(book -> book.getName().equals(name))
+        List<String> titles = books.stream()
+                .map(Book::getTitle)
                 .collect(Collectors.toList());
+
+        assertThat(titles.contains("book_no1"), is(true));
+        assertThat(titles.contains("book_no2"), is(true));
+        assertThat(titles.contains("book_no3"), is(true));
     }
 }
