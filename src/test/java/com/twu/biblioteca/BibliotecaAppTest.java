@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.command.Message;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -9,6 +10,6 @@ public class BibliotecaAppTest {
 
     @Test
     public void should_get_welcome_message() throws Exception {
-        assertThat(new BibliotecaApp().welcome(), is("Hello, welcome to Biblioteca system!"));
+        assertThat(BibliotecaApp.welcome(), is(Message.WELCOME));
     }
 }

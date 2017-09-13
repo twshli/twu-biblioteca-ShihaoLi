@@ -5,4 +5,6 @@ package com.twu.biblioteca.command;
  */
 public class Command {
     public static final String INIT_APP = "INIT_APP@COMMAND";
+
+    public static final String QUIT_APP = "2";
 }
