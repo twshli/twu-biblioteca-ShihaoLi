@@ -94,4 +94,29 @@ public class CommandConsumerTest {
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_FAILURE));
     }
+
+    @Test
+    public void should_return_alert_message_when_select_return_option_in_main_menu() throws Exception {
+        ExecResult result = consumer.exec(State.MAIN_MENU, Option.RETURN_BOOK);
+
+        assertThat(result.getMessage(), is(Message.ALERT_RETURN));
+    }
+
+    @Test
+    public void should_return_success_message_and_main_menu_after_return_checkout_book() throws Exception {
+        when(bookService.returnBook("book_1")).thenReturn(true);
+
+        ExecResult result = consumer.exec(State.RETURN_BOOK, "book_1");
+
+        assertThat(result.getMessage(), is(Message.ALERT_RETURN_SUCCESS + "\n" + Message.MAIN_MENU));
+    }
+
+    @Test
+    public void should_return_alert_message_after_fail_to_return_book() throws Exception {
+        when(bookService.returnBook("book_1")).thenReturn(false);
+
+        ExecResult result = consumer.exec(State.RETURN_BOOK, "book_1");
+
+        assertThat(result.getMessage(), is(Message.ALERT_RETURN_FAILURE));
+    }
 }

@@ -29,6 +29,9 @@ public class CommandConsumer {
             case State.CHECKOUT_BOOK:
                 return new CheckoutBookHandler(bookService);
 
+            case State.RETURN_BOOK:
+                return new ReturnBookHandler(bookService);
+
             default:
                 return new QuitAppHandler();
         }

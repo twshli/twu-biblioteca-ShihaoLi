@@ -29,6 +29,9 @@ public class MainMenuHandler implements CommandHandler {
             case Option.CHECKOUT_BOOK:
                 return execCheckoutBookCommand();
 
+            case Option.RETURN_BOOK:
+                return execReturnBookCommand();
+
             case Option.QUIT_APP:
                 return execQuitAppCommand();
 
@@ -48,6 +51,10 @@ public class MainMenuHandler implements CommandHandler {
 
     private ExecResult execCheckoutBookCommand() {
         return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT);
+    }
+
+    private ExecResult execReturnBookCommand() {
+        return new ExecResult(State.RETURN_BOOK, Message.ALERT_RETURN);
     }
 
     private ExecResult execQuitAppCommand() {
