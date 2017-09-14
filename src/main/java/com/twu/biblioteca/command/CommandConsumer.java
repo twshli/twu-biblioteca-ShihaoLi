@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class CommandConsumer {
 
+    private StateManager stateManager = new StateManager();
+
     private BookService bookService;
 
     public CommandConsumer(BookService bookService) {
@@ -18,19 +20,44 @@ public class CommandConsumer {
     }
 
     public ExecResult exec(String command) {
-        switch (command) {
-            case Command.INIT_APP:
-                return execInitAppCommand();
+        switch (stateManager.getState()) {
+            case State.INIT_APP:
+                return handleInitAppState();
 
+            case State.MAIN_MENU:
+                return handleMainMenuState(command);
+
+            case State.CHECKOUT_BOOK:
+                return handleCheckoutBookState(command);
+
+            default:
+                return new ExecResult("");
+        }
+    }
+
+    private ExecResult handleInitAppState() {
+        return execInitAppCommand();
+    }
+
+    private ExecResult handleMainMenuState(String command) {
+        switch (command) {
             case Command.LIST_BOOKS:
                 return execListBooksCommand();
+
+            case Command.CHECKOUT_BOOK:
+                return execCheckoutBookCommand();
 
             default:
                 return new ExecResult(Message.ALERT_SELECT_VALID_OPTION);
         }
     }
 
+    private ExecResult handleCheckoutBookState(String command) {
+        return null;
+    }
+
     private ExecResult execInitAppCommand() {
+        stateManager.setState(State.MAIN_MENU);
         return new ExecResult(Message.MAIN_MENU);
     }
 
@@ -41,5 +68,9 @@ public class CommandConsumer {
                 : BookInfoCreator.generate(books));
 
         return new ExecResult(booksInfo + "\n" + Message.MAIN_MENU);
+    }
+
+    private ExecResult execCheckoutBookCommand() {
+        return new ExecResult(Message.ALERT_CHECKOUT);
     }
 }

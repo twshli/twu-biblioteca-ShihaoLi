@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -28,22 +28,26 @@ public class CommandConsumerTest {
     private CommandConsumer consumer;
 
     @Test
-    public void should_return_main_menu_when_init_the_app() throws Exception {
+    public void should_enter_main_menu_after_init_the_app() throws Exception {
         ExecResult result = consumer.exec(Command.INIT_APP);
 
         assertThat(result.getMessage(), is(Message.MAIN_MENU));
     }
 
     @Test
-    public void should_return_alert_message_when_input_invalid_option() throws Exception {
+    public void should_return_alert_message_when_input_invalid_option_in_main_menu() throws Exception {
+        consumer.exec(Command.INIT_APP);
+
         ExecResult result = consumer.exec("xxxx");
 
         assertThat(result.getMessage(), is(Message.ALERT_SELECT_VALID_OPTION));
     }
 
     @Test
-    public void should_return_alert_message_and_main_menu_when_list_books_with_no_available_books() throws Exception {
+    public void should_return_alert_message_and_main_menu_when_select_list_option_with_no_available_books_in_main_menu() throws Exception {
         when(bookService.getAllAvailBooks()).thenReturn(new ArrayList<>());
+
+        consumer.exec(Command.INIT_APP);
 
         ExecResult result = consumer.exec(Command.LIST_BOOKS);
 
@@ -51,14 +55,25 @@ public class CommandConsumerTest {
     }
 
     @Test
-    public void should_return_books_info_and_main_menu_when_list_books() throws Exception {
-        when(bookService.getAllAvailBooks()).thenReturn(Arrays.asList(
+    public void should_return_books_info_and_main_menu_when_select_list_option_with_available_books_in_main_menu() throws Exception {
+        when(bookService.getAllAvailBooks()).thenReturn(Collections.singletonList(
                 new Book("book_1", "author_1", 2012)
         ));
+
+        consumer.exec(Command.INIT_APP);
 
         ExecResult result = consumer.exec(Command.LIST_BOOKS);
 
         String expected = "| book_1 | author_1 | 2012 |\n" + Message.MAIN_MENU;
         assertThat(result.getMessage(), is(expected));
+    }
+
+    @Test
+    public void should_return_alert_message_when_select_checkout_option_in_main_menu() throws Exception {
+        consumer.exec(Command.INIT_APP);
+
+        ExecResult result = consumer.exec(Command.CHECKOUT_BOOK);
+
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT));
     }
 }
