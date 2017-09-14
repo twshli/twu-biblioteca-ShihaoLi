@@ -4,21 +4,22 @@ import com.twu.biblioteca.command.Command;
 import com.twu.biblioteca.command.CommandConsumer;
 import com.twu.biblioteca.command.ExecResult;
 import com.twu.biblioteca.command.Message;
+import com.twu.biblioteca.repository.BookMemoryRepository;
+import com.twu.biblioteca.repository.BookRepository;
+import com.twu.biblioteca.service.BookService;
 
 import java.util.Scanner;
 
 public class BibliotecaApp {
 
-    public static String welcome() {
-        return Message.WELCOME;
-    }
+    private CommandConsumer consumer;
 
-    public static void run() {
+    public void run() {
         Scanner scanner = new Scanner(System.in);
 
-        CommandConsumer consumer =  new CommandConsumer();
         String command = Command.INIT_APP;
 
+        init();
         System.out.println(welcome());
 
         do {
@@ -29,7 +30,19 @@ public class BibliotecaApp {
         } while (!Command.QUIT_APP.equals(command));
     }
 
+    private void init() {
+        BookRepository bookRepository = new BookMemoryRepository();
+        BookService bookService = new BookService(bookRepository);
+
+        consumer = new CommandConsumer(bookService);
+    }
+
+
+    public static String welcome() {
+        return Message.WELCOME;
+    }
+
     public static void main(String[] args) {
-        BibliotecaApp.run();
+        new BibliotecaApp().run();
     }
 }

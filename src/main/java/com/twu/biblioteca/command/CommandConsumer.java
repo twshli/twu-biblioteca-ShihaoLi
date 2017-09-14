@@ -11,7 +11,11 @@ import java.util.List;
  */
 public class CommandConsumer {
 
-    private BookService bookService = new BookService();
+    private BookService bookService;
+
+    public CommandConsumer(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     public ExecResult exec(String command) {
         switch (command) {

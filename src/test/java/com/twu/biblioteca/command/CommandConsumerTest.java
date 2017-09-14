@@ -25,7 +25,7 @@ public class CommandConsumerTest {
     private BookService bookService;
 
     @InjectMocks
-    private CommandConsumer consumer = new CommandConsumer();
+    private CommandConsumer consumer;
 
     @Test
     public void should_return_main_menu_when_init_the_app() throws Exception {
