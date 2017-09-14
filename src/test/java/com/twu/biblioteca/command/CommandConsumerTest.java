@@ -1,5 +1,6 @@
 package com.twu.biblioteca.command;
 
+import com.twu.biblioteca.command.handler.Option;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.service.BookService;
 import org.junit.Test;
@@ -29,7 +30,7 @@ public class CommandConsumerTest {
 
     @Test
     public void should_enter_main_menu_after_init_the_app() throws Exception {
-        ExecResult result = consumer.exec(State.INIT_APP, Command.INIT_APP);
+        ExecResult result = consumer.exec(State.INIT_APP, "");
 
         assertThat(result.getMessage(), is(Message.MAIN_MENU));
     }
@@ -43,7 +44,7 @@ public class CommandConsumerTest {
 
     @Test
     public void should_enter_exit_state_when_select_quit_option_in_main_menu() throws Exception {
-        ExecResult result = consumer.exec(State.MAIN_MENU, Command.QUIT_APP);
+        ExecResult result = consumer.exec(State.MAIN_MENU, Option.QUIT_APP);
 
         assertThat(result.getState(), is(State.QUIT_APP));
     }
@@ -52,7 +53,7 @@ public class CommandConsumerTest {
     public void should_return_alert_message_and_main_menu_when_select_list_option_with_no_available_books_in_main_menu() throws Exception {
         when(bookService.getAllAvailBooks()).thenReturn(new ArrayList<>());
 
-        ExecResult result = consumer.exec(State.MAIN_MENU, Command.LIST_BOOKS);
+        ExecResult result = consumer.exec(State.MAIN_MENU, Option.LIST_BOOKS);
 
         assertThat(result.getMessage(), is(Message.ALERT_NO_AVAIL_BOOKS + "\n" + Message.MAIN_MENU));
     }
@@ -63,7 +64,7 @@ public class CommandConsumerTest {
                 new Book("book_1", "author_1", 2012)
         ));
 
-        ExecResult result = consumer.exec(State.MAIN_MENU, Command.LIST_BOOKS);
+        ExecResult result = consumer.exec(State.MAIN_MENU, Option.LIST_BOOKS);
 
         String expected = "| book_1 | author_1 | 2012 |\n" + Message.MAIN_MENU;
         assertThat(result.getMessage(), is(expected));
@@ -71,7 +72,7 @@ public class CommandConsumerTest {
 
     @Test
     public void should_return_alert_message_when_select_checkout_option_in_main_menu() throws Exception {
-        ExecResult result = consumer.exec(State.MAIN_MENU, Command.CHECKOUT_BOOK);
+        ExecResult result = consumer.exec(State.MAIN_MENU, Option.CHECKOUT_BOOK);
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT));
     }

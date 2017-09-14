@@ -15,7 +15,7 @@ public class BibliotecaApp {
     public void run() {
         Scanner scanner = new Scanner(System.in);
 
-        String command = Command.INIT_APP;
+        String command = "";
         ExecResult result = new ExecResult(State.INIT_APP, "");
 
         init();
