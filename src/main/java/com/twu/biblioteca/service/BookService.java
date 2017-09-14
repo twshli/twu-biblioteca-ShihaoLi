@@ -16,7 +16,11 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<Book> getAllAvailBooks() {
+        return bookRepository.findAllAvail();
+    }
+
+    public boolean checkoutBook(String title) {
+        return bookRepository.checkoutByTitle(title);
     }
 }

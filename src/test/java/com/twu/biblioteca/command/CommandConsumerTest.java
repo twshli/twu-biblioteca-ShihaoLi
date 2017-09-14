@@ -43,7 +43,7 @@ public class CommandConsumerTest {
 
     @Test
     public void should_return_alert_message_and_main_menu_when_list_books_with_no_available_books() throws Exception {
-        when(bookService.getAllBooks()).thenReturn(new ArrayList<>());
+        when(bookService.getAllAvailBooks()).thenReturn(new ArrayList<>());
 
         ExecResult result = consumer.exec(Command.LIST_BOOKS);
 
@@ -52,7 +52,7 @@ public class CommandConsumerTest {
 
     @Test
     public void should_return_books_info_and_main_menu_when_list_books() throws Exception {
-        when(bookService.getAllBooks()).thenReturn(Arrays.asList(
+        when(bookService.getAllAvailBooks()).thenReturn(Arrays.asList(
                 new Book("book_1", "author_1", 2012)
         ));
 

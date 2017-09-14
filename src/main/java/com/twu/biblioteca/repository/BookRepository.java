@@ -10,5 +10,8 @@ import java.util.List;
 public interface BookRepository {
 
     void add(Book book);
-    List<Book> findAll();
+
+    List<Book> findAllAvail();
+
+    boolean checkoutByTitle(String title);
 }

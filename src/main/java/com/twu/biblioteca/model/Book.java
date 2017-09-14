@@ -8,6 +8,8 @@ public class Book {
     private String author;
     private int publishYear;
 
+    private boolean isAvail = true;
+
     public Book(String title, String author, int publishYear) {
         this.title = title;
         this.author = author;
@@ -24,5 +26,18 @@ public class Book {
 
     public int getPublishYear() {
         return publishYear;
+    }
+
+    public boolean checkout() {
+        if (!isAvail) {
+            return false;
+        }
+
+        isAvail = false;
+        return true;
+    }
+
+    public boolean isAvail() {
+        return isAvail;
     }
 }

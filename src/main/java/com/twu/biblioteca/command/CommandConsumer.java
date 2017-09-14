@@ -35,7 +35,7 @@ public class CommandConsumer {
     }
 
     private ExecResult execListBooksCommand() {
-        List<Book> books = bookService.getAllBooks();
+        List<Book> books = bookService.getAllAvailBooks();
 
         String booksInfo = (books.isEmpty() ? Message.ALERT_NO_AVAIL_BOOKS
                 : BookInfoCreator.generate(books));
