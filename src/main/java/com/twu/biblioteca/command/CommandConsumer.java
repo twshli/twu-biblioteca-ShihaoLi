@@ -19,16 +19,16 @@ public class CommandConsumer {
         this.bookService = bookService;
     }
 
-    public ExecResult exec(String command) {
+    public ExecResult exec(String param) {
         switch (stateManager.getState()) {
             case State.INIT_APP:
                 return handleInitAppState();
 
             case State.MAIN_MENU:
-                return handleMainMenuState(command);
+                return handleMainMenuState(param);
 
             case State.CHECKOUT_BOOK:
-                return handleCheckoutBookState(command);
+                return handleCheckoutBookState(param);
 
             default:
                 return new ExecResult("");
@@ -52,8 +52,13 @@ public class CommandConsumer {
         }
     }
 
-    private ExecResult handleCheckoutBookState(String command) {
-        return null;
+    private ExecResult handleCheckoutBookState(String title) {
+        if (bookService.checkoutBook(title)) {
+            stateManager.setState(State.MAIN_MENU);
+            return new ExecResult(Message.ALERT_CHECKOUT_SUCCESS + "\n" + Message.MAIN_MENU);
+        } else {
+            return new ExecResult(Message.ALERT_CHECKOUT_FAILURE);
+        }
     }
 
     private ExecResult execInitAppCommand() {
@@ -71,6 +76,7 @@ public class CommandConsumer {
     }
 
     private ExecResult execCheckoutBookCommand() {
+        stateManager.setState(State.CHECKOUT_BOOK);
         return new ExecResult(Message.ALERT_CHECKOUT);
     }
 }

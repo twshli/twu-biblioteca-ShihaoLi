@@ -17,4 +17,5 @@ public class Message {
 
     public static final String ALERT_CHECKOUT = "Input title of book to checkout: ";
     public static final String ALERT_CHECKOUT_SUCCESS = "Thank you! Enjoy the book!";
+    public static final String ALERT_CHECKOUT_FAILURE = "That book is not available.";
 }

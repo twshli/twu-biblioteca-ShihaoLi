@@ -76,4 +76,28 @@ public class CommandConsumerTest {
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT));
     }
+
+    @Test
+    public void should_return_success_message_and_main_menu_after_checkout_a_book() throws Exception {
+        when(bookService.checkoutBook("book_1")).thenReturn(true);
+
+        consumer.exec(Command.INIT_APP);
+        consumer.exec(Command.CHECKOUT_BOOK);
+
+        ExecResult result = consumer.exec("book_1");
+
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_SUCCESS + "\n" + Message.MAIN_MENU));
+    }
+
+    @Test
+    public void should_return_alert_message_after_fail_to_checkout_a_book() throws Exception {
+        when(bookService.checkoutBook("book_xx")).thenReturn(false);
+
+        consumer.exec(Command.INIT_APP);
+        consumer.exec(Command.CHECKOUT_BOOK);
+
+        ExecResult result = consumer.exec("book_xx");
+
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_FAILURE));
+    }
 }
