@@ -10,5 +10,6 @@ public class Message {
     public static final String MAIN_MENU = "1. List Books\n"
             + "2. Quit";
 
-    public static final String ALERT_VALID_OPTION = "Select a valid option!";
+    public static final String ALERT_SELECT_VALID_OPTION = "Select a valid option!";
+    public static final String ALERT_NO_AVAIL_BOOKS = "No available books in library!";
 }
