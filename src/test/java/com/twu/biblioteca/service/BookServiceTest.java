@@ -73,4 +73,24 @@ public class BookServiceTest {
         assertThat(bookService.checkoutBook("book_no1"), is(false));
         assertThat(bookService.getAllAvailBooks().size(), is(2));
     }
+
+    @Test
+    public void should_succeed_to_return_book_checked_out() throws Exception {
+        bookService.checkoutBook("book_no1");
+
+        assertThat(bookService.returnBook("book_no1"), is(true));
+        assertThat(bookService.getAllAvailBooks().size(), is(3));
+    }
+
+    @Test
+    public void should_fail_to_return_unexisted_book() throws Exception {
+        assertThat(bookService.returnBook("book_xx"), is(false));
+        assertThat(bookService.getAllAvailBooks().size(), is(3));
+    }
+
+    @Test
+    public void should_fail_to_return_available_book() throws Exception {
+        assertThat(bookService.returnBook("book_no1"), is(false));
+        assertThat(bookService.getAllAvailBooks().size(), is(3));
+    }
 }

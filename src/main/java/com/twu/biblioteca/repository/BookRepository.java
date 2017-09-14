@@ -14,4 +14,5 @@ public interface BookRepository {
     List<Book> findAllAvail();
 
     boolean checkoutByTitle(String title);
+    boolean returnByTitle(String title);
 }

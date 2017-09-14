@@ -23,4 +23,8 @@ public class BookService {
     public boolean checkoutBook(String title) {
         return bookRepository.checkoutByTitle(title);
     }
+
+    public boolean returnBook(String title) {
+        return bookRepository.returnByTitle(title);
+    }
 }

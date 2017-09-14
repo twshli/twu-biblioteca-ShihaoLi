@@ -32,4 +32,10 @@ public class BookMemoryRepository implements BookRepository {
         return (books.containsKey(title)
                 && books.get(title).checkout());
     }
+
+    @Override
+    public boolean returnByTitle(String title) {
+        return (books.containsKey(title)
+                && books.get(title).returnBack());
+    }
 }

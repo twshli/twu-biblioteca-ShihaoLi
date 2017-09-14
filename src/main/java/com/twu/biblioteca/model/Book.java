@@ -28,6 +28,10 @@ public class Book {
         return publishYear;
     }
 
+    public boolean isAvail() {
+        return isAvail;
+    }
+
     public boolean checkout() {
         if (!isAvail) {
             return false;
@@ -37,7 +41,12 @@ public class Book {
         return true;
     }
 
-    public boolean isAvail() {
-        return isAvail;
+    public boolean returnBack() {
+        if (isAvail) {
+            return false;
+        }
+
+        isAvail = true;
+        return true;
     }
 }
