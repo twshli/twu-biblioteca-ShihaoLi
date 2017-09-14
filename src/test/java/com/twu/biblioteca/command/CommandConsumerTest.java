@@ -29,27 +29,30 @@ public class CommandConsumerTest {
 
     @Test
     public void should_enter_main_menu_after_init_the_app() throws Exception {
-        ExecResult result = consumer.exec(Command.INIT_APP);
+        ExecResult result = consumer.exec(State.INIT_APP, Command.INIT_APP);
 
         assertThat(result.getMessage(), is(Message.MAIN_MENU));
     }
 
     @Test
     public void should_return_alert_message_when_input_invalid_option_in_main_menu() throws Exception {
-        consumer.exec(Command.INIT_APP);
-
-        ExecResult result = consumer.exec("xxxx");
+        ExecResult result = consumer.exec(State.MAIN_MENU,"xxxx");
 
         assertThat(result.getMessage(), is(Message.ALERT_SELECT_VALID_OPTION));
+    }
+
+    @Test
+    public void should_enter_exit_state_when_select_quit_option_in_main_menu() throws Exception {
+        ExecResult result = consumer.exec(State.MAIN_MENU, Command.QUIT_APP);
+
+        assertThat(result.getState(), is(State.QUIT_APP));
     }
 
     @Test
     public void should_return_alert_message_and_main_menu_when_select_list_option_with_no_available_books_in_main_menu() throws Exception {
         when(bookService.getAllAvailBooks()).thenReturn(new ArrayList<>());
 
-        consumer.exec(Command.INIT_APP);
-
-        ExecResult result = consumer.exec(Command.LIST_BOOKS);
+        ExecResult result = consumer.exec(State.MAIN_MENU, Command.LIST_BOOKS);
 
         assertThat(result.getMessage(), is(Message.ALERT_NO_AVAIL_BOOKS + "\n" + Message.MAIN_MENU));
     }
@@ -60,9 +63,7 @@ public class CommandConsumerTest {
                 new Book("book_1", "author_1", 2012)
         ));
 
-        consumer.exec(Command.INIT_APP);
-
-        ExecResult result = consumer.exec(Command.LIST_BOOKS);
+        ExecResult result = consumer.exec(State.MAIN_MENU, Command.LIST_BOOKS);
 
         String expected = "| book_1 | author_1 | 2012 |\n" + Message.MAIN_MENU;
         assertThat(result.getMessage(), is(expected));
@@ -70,9 +71,7 @@ public class CommandConsumerTest {
 
     @Test
     public void should_return_alert_message_when_select_checkout_option_in_main_menu() throws Exception {
-        consumer.exec(Command.INIT_APP);
-
-        ExecResult result = consumer.exec(Command.CHECKOUT_BOOK);
+        ExecResult result = consumer.exec(State.MAIN_MENU, Command.CHECKOUT_BOOK);
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT));
     }
@@ -81,10 +80,7 @@ public class CommandConsumerTest {
     public void should_return_success_message_and_main_menu_after_checkout_a_book() throws Exception {
         when(bookService.checkoutBook("book_1")).thenReturn(true);
 
-        consumer.exec(Command.INIT_APP);
-        consumer.exec(Command.CHECKOUT_BOOK);
-
-        ExecResult result = consumer.exec("book_1");
+        ExecResult result = consumer.exec(State.CHECKOUT_BOOK, "book_1");
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_SUCCESS + "\n" + Message.MAIN_MENU));
     }
@@ -93,10 +89,7 @@ public class CommandConsumerTest {
     public void should_return_alert_message_after_fail_to_checkout_a_book() throws Exception {
         when(bookService.checkoutBook("book_xx")).thenReturn(false);
 
-        consumer.exec(Command.INIT_APP);
-        consumer.exec(Command.CHECKOUT_BOOK);
-
-        ExecResult result = consumer.exec("book_xx");
+        ExecResult result = consumer.exec(State.CHECKOUT_BOOK,"book_xx");
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_FAILURE));
     }

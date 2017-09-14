@@ -11,16 +11,14 @@ import java.util.List;
  */
 public class CommandConsumer {
 
-    private StateManager stateManager = new StateManager();
-
     private BookService bookService;
 
     public CommandConsumer(BookService bookService) {
         this.bookService = bookService;
     }
 
-    public ExecResult exec(String param) {
-        switch (stateManager.getState()) {
+    public ExecResult exec(String curState, String param) {
+        switch (curState) {
             case State.INIT_APP:
                 return handleInitAppState();
 
@@ -31,12 +29,12 @@ public class CommandConsumer {
                 return handleCheckoutBookState(param);
 
             default:
-                return new ExecResult("");
+                return execQuitAppCommand();
         }
     }
 
     private ExecResult handleInitAppState() {
-        return execInitAppCommand();
+        return new ExecResult(State.MAIN_MENU, Message.MAIN_MENU);
     }
 
     private ExecResult handleMainMenuState(String command) {
@@ -47,23 +45,12 @@ public class CommandConsumer {
             case Command.CHECKOUT_BOOK:
                 return execCheckoutBookCommand();
 
+            case Command.QUIT_APP:
+                return execQuitAppCommand();
+
             default:
-                return new ExecResult(Message.ALERT_SELECT_VALID_OPTION);
+                return new ExecResult(State.MAIN_MENU, Message.ALERT_SELECT_VALID_OPTION);
         }
-    }
-
-    private ExecResult handleCheckoutBookState(String title) {
-        if (bookService.checkoutBook(title)) {
-            stateManager.setState(State.MAIN_MENU);
-            return new ExecResult(Message.ALERT_CHECKOUT_SUCCESS + "\n" + Message.MAIN_MENU);
-        } else {
-            return new ExecResult(Message.ALERT_CHECKOUT_FAILURE);
-        }
-    }
-
-    private ExecResult execInitAppCommand() {
-        stateManager.setState(State.MAIN_MENU);
-        return new ExecResult(Message.MAIN_MENU);
     }
 
     private ExecResult execListBooksCommand() {
@@ -72,11 +59,22 @@ public class CommandConsumer {
         String booksInfo = (books.isEmpty() ? Message.ALERT_NO_AVAIL_BOOKS
                 : BookInfoCreator.generate(books));
 
-        return new ExecResult(booksInfo + "\n" + Message.MAIN_MENU);
+        return new ExecResult(State.MAIN_MENU, booksInfo + "\n" + Message.MAIN_MENU);
     }
 
     private ExecResult execCheckoutBookCommand() {
-        stateManager.setState(State.CHECKOUT_BOOK);
-        return new ExecResult(Message.ALERT_CHECKOUT);
+        return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT);
+    }
+
+    private ExecResult execQuitAppCommand() {
+        return new ExecResult(State.QUIT_APP, "");
+    }
+
+    private ExecResult handleCheckoutBookState(String title) {
+        if (bookService.checkoutBook(title)) {
+            return new ExecResult(State.MAIN_MENU,Message.ALERT_CHECKOUT_SUCCESS + "\n" + Message.MAIN_MENU);
+        } else {
+            return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT_FAILURE);
+        }
     }
 }
