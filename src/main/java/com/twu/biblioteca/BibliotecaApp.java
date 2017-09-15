@@ -1,6 +1,9 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.command.*;
+import com.twu.biblioteca.command.ExecResult;
+import com.twu.biblioteca.command.Executor;
+import com.twu.biblioteca.command.Message;
+import com.twu.biblioteca.command.State;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.repository.BookMemoryRepository;
 import com.twu.biblioteca.repository.BookRepository;
@@ -10,7 +13,7 @@ import java.util.Scanner;
 
 public class BibliotecaApp {
 
-    private CommandConsumer consumer;
+    private Executor executor;
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -22,7 +25,7 @@ public class BibliotecaApp {
         System.out.println(welcome());
 
         do {
-            result = consumer.exec(result.getState(), command);
+            result = executor.exec(result.getState(), command);
             if (result.getState().equals(State.QUIT_APP)) {
                 break;
             }
@@ -36,7 +39,7 @@ public class BibliotecaApp {
         BookRepository bookRepository = initRepository();
         BookService bookService = new BookService(bookRepository);
 
-        consumer = new CommandConsumer(bookService);
+        executor = new Executor(bookService);
     }
 
     private BookRepository initRepository() {

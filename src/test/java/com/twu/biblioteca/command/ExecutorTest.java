@@ -1,6 +1,6 @@
 package com.twu.biblioteca.command;
 
-import com.twu.biblioteca.command.handler.Option;
+import com.twu.biblioteca.command.handler.MenuOption;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.service.BookService;
 import org.junit.Test;
@@ -20,31 +20,31 @@ import static org.mockito.Mockito.when;
  * Created by Shli on 12/09/2017.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class CommandConsumerTest {
+public class ExecutorTest {
 
     @Mock
     private BookService bookService;
 
     @InjectMocks
-    private CommandConsumer consumer;
+    private Executor executor;
 
     @Test
     public void should_enter_main_menu_after_init_the_app() throws Exception {
-        ExecResult result = consumer.exec(State.INIT_APP, "");
+        ExecResult result = executor.exec(State.INIT_APP, "");
 
         assertThat(result.getMessage(), is(Message.MAIN_MENU));
     }
 
     @Test
     public void should_return_alert_message_when_input_invalid_option_in_main_menu() throws Exception {
-        ExecResult result = consumer.exec(State.MAIN_MENU,"xxxx");
+        ExecResult result = executor.exec(State.MAIN_MENU,"xxxx");
 
         assertThat(result.getMessage(), is(Message.ALERT_SELECT_VALID_OPTION));
     }
 
     @Test
     public void should_enter_exit_state_when_select_quit_option_in_main_menu() throws Exception {
-        ExecResult result = consumer.exec(State.MAIN_MENU, Option.QUIT_APP);
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.QUIT_APP);
 
         assertThat(result.getState(), is(State.QUIT_APP));
     }
@@ -53,7 +53,7 @@ public class CommandConsumerTest {
     public void should_return_alert_message_and_main_menu_when_select_list_option_with_no_available_books_in_main_menu() throws Exception {
         when(bookService.getAllAvailBooks()).thenReturn(new ArrayList<>());
 
-        ExecResult result = consumer.exec(State.MAIN_MENU, Option.LIST_BOOKS);
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_BOOKS);
 
         assertThat(result.getMessage(), is(Message.ALERT_NO_AVAIL_BOOKS + "\n" + Message.MAIN_MENU));
     }
@@ -64,7 +64,7 @@ public class CommandConsumerTest {
                 new Book("book_1", "author_1", 2012)
         ));
 
-        ExecResult result = consumer.exec(State.MAIN_MENU, Option.LIST_BOOKS);
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_BOOKS);
 
         String expected = "| book_1 | author_1 | 2012 |\n" + Message.MAIN_MENU;
         assertThat(result.getMessage(), is(expected));
@@ -72,7 +72,7 @@ public class CommandConsumerTest {
 
     @Test
     public void should_return_alert_message_when_select_checkout_option_in_main_menu() throws Exception {
-        ExecResult result = consumer.exec(State.MAIN_MENU, Option.CHECKOUT_BOOK);
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.CHECKOUT_BOOK);
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT));
     }
@@ -81,7 +81,7 @@ public class CommandConsumerTest {
     public void should_return_success_message_and_main_menu_after_checkout_a_book() throws Exception {
         when(bookService.checkoutBook("book_1")).thenReturn(true);
 
-        ExecResult result = consumer.exec(State.CHECKOUT_BOOK, "book_1");
+        ExecResult result = executor.exec(State.CHECKOUT_BOOK, "book_1");
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_SUCCESS + "\n" + Message.MAIN_MENU));
     }
@@ -90,14 +90,14 @@ public class CommandConsumerTest {
     public void should_return_alert_message_after_fail_to_checkout_a_book() throws Exception {
         when(bookService.checkoutBook("book_xx")).thenReturn(false);
 
-        ExecResult result = consumer.exec(State.CHECKOUT_BOOK,"book_xx");
+        ExecResult result = executor.exec(State.CHECKOUT_BOOK,"book_xx");
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_FAILURE));
     }
 
     @Test
     public void should_return_alert_message_when_select_return_option_in_main_menu() throws Exception {
-        ExecResult result = consumer.exec(State.MAIN_MENU, Option.RETURN_BOOK);
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.RETURN_BOOK);
 
         assertThat(result.getMessage(), is(Message.ALERT_RETURN));
     }
@@ -106,7 +106,7 @@ public class CommandConsumerTest {
     public void should_return_success_message_and_main_menu_after_return_checkout_book() throws Exception {
         when(bookService.returnBook("book_1")).thenReturn(true);
 
-        ExecResult result = consumer.exec(State.RETURN_BOOK, "book_1");
+        ExecResult result = executor.exec(State.RETURN_BOOK, "book_1");
 
         assertThat(result.getMessage(), is(Message.ALERT_RETURN_SUCCESS + "\n" + Message.MAIN_MENU));
     }
@@ -115,7 +115,7 @@ public class CommandConsumerTest {
     public void should_return_alert_message_after_fail_to_return_book() throws Exception {
         when(bookService.returnBook("book_1")).thenReturn(false);
 
-        ExecResult result = consumer.exec(State.RETURN_BOOK, "book_1");
+        ExecResult result = executor.exec(State.RETURN_BOOK, "book_1");
 
         assertThat(result.getMessage(), is(Message.ALERT_RETURN_FAILURE));
     }

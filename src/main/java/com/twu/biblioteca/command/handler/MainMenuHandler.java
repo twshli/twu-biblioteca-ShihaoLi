@@ -5,7 +5,7 @@ import com.twu.biblioteca.command.Message;
 import com.twu.biblioteca.command.State;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.service.BookService;
-import com.twu.biblioteca.util.BookInfoCreator;
+import com.twu.biblioteca.util.BookInfoBuilder;
 
 import java.util.List;
 
@@ -23,16 +23,16 @@ public class MainMenuHandler implements CommandHandler {
     @Override
     public ExecResult handle(String command) {
         switch (command) {
-            case Option.LIST_BOOKS:
+            case MenuOption.LIST_BOOKS:
                 return execListBooksCommand();
 
-            case Option.CHECKOUT_BOOK:
+            case MenuOption.CHECKOUT_BOOK:
                 return execCheckoutBookCommand();
 
-            case Option.RETURN_BOOK:
+            case MenuOption.RETURN_BOOK:
                 return execReturnBookCommand();
 
-            case Option.QUIT_APP:
+            case MenuOption.QUIT_APP:
                 return execQuitAppCommand();
 
             default:
@@ -44,7 +44,7 @@ public class MainMenuHandler implements CommandHandler {
         List<Book> books = bookService.getAllAvailBooks();
 
         String booksInfo = (books.isEmpty() ? Message.ALERT_NO_AVAIL_BOOKS
-                : BookInfoCreator.generate(books));
+                : BookInfoBuilder.generate(books));
 
         return new ExecResult(State.MAIN_MENU, booksInfo + "\n" + Message.MAIN_MENU);
     }

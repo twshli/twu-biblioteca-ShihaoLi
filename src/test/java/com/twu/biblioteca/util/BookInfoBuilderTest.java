@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by Shli on 12/09/2017.
  */
-public class BookInfoCreatorTest {
+public class BookInfoBuilderTest {
 
     @Test
     public void should_create_books_info_for_book_list() throws Exception {
@@ -26,6 +26,6 @@ public class BookInfoCreatorTest {
                 + "| book_2 | author_2 | 2014 |\n"
                 + "| book_3 | author_3 | 2012 |";
 
-        assertThat(BookInfoCreator.generate(books), is(booksInfo));
+        assertThat(BookInfoBuilder.generate(books), is(booksInfo));
     }
 }

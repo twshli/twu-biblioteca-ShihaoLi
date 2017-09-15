@@ -1,16 +1,21 @@
 package com.twu.biblioteca.command;
 
-import com.twu.biblioteca.command.handler.*;
+import com.twu.biblioteca.command.handler.CheckoutBookHandler;
+import com.twu.biblioteca.command.handler.CommandHandler;
+import com.twu.biblioteca.command.handler.InitAppHandler;
+import com.twu.biblioteca.command.handler.MainMenuHandler;
+import com.twu.biblioteca.command.handler.QuitAppHandler;
+import com.twu.biblioteca.command.handler.ReturnBookHandler;
 import com.twu.biblioteca.service.BookService;
 
 /**
  * Created by Shli on 12/09/2017.
  */
-public class CommandConsumer {
+public class Executor {
 
     private BookService bookService;
 
-    public CommandConsumer(BookService bookService) {
+    public Executor(BookService bookService) {
         this.bookService = bookService;
     }
 
