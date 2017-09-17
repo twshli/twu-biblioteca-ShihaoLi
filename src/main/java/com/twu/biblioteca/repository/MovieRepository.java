@@ -9,4 +9,6 @@ public interface MovieRepository {
     void add(Movie movie);
 
     List<Movie> findAllAvail();
+
+    boolean checkoutByTitle(String title);
 }

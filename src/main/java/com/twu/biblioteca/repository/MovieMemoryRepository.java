@@ -2,10 +2,10 @@ package com.twu.biblioteca.repository;
 
 import com.twu.biblioteca.model.Movie;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MovieMemoryRepository implements MovieRepository {
 
@@ -18,6 +18,14 @@ public class MovieMemoryRepository implements MovieRepository {
 
     @Override
     public List<Movie> findAllAvail() {
-        return new ArrayList<>(movies.values());
+        return movies.values().stream()
+                .filter(Movie::isAvail)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean checkoutByTitle(String title) {
+        return (movies.containsKey(title)
+                && movies.get(title).checkout());
     }
 }

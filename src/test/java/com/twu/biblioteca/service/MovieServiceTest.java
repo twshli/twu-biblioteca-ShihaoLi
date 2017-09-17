@@ -42,4 +42,24 @@ public class MovieServiceTest {
         assertThat(movie.getPublishYear(), is(2016));
         assertThat(movie.getRating(), is(Rating.ONE));
     }
+
+    @Test
+    public void should_succeed_to_checkout_avaiable_movie() throws Exception {
+        assertThat(movieService.checkoutMovie("movie_1"), is(true));
+        assertThat(movieService.getAllAvailMovies().size(), is(2));
+    }
+
+    @Test
+    public void should_fail_to_checkout_unexisted_movie() throws Exception {
+        assertThat(movieService.checkoutMovie("movie_xxx"), is(false));
+        assertThat(movieService.getAllAvailMovies().size(), is(3));
+    }
+
+    @Test
+    public void should_fail_to_checkout_unavailable_movie() throws Exception {
+        movieService.checkoutMovie("movie_1");
+
+        assertThat(movieService.checkoutMovie("movie_1"), is(false));
+        assertThat(movieService.getAllAvailMovies().size(), is(2));
+    }
 }

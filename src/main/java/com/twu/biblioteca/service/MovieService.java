@@ -16,4 +16,8 @@ public class MovieService {
     public List<Movie> getAllAvailMovies() {
         return movieRepository.findAllAvail();
     }
+
+    public boolean checkoutMovie(String title) {
+        return movieRepository.checkoutByTitle(title);
+    }
 }

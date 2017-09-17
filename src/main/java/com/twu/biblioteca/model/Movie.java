@@ -7,6 +7,8 @@ public class Movie {
     private int publishYear;
     private int rating;
 
+    private boolean isAvail = true;
+
     public Movie(String title, String director, int publishYear, int rating) {
         this.title = title;
         this.director = director;
@@ -28,5 +30,18 @@ public class Movie {
 
     public int getRating() {
         return rating;
+    }
+
+    public boolean isAvail() {
+        return isAvail;
+    }
+
+    public boolean checkout() {
+        if (!isAvail) {
+            return false;
+        }
+
+        isAvail = false;
+        return true;
     }
 }
