@@ -5,9 +5,14 @@ import com.twu.biblioteca.command.Executor;
 import com.twu.biblioteca.command.Message;
 import com.twu.biblioteca.command.State;
 import com.twu.biblioteca.model.Book;
+import com.twu.biblioteca.model.Movie;
+import com.twu.biblioteca.model.Rating;
 import com.twu.biblioteca.repository.BookMemoryRepository;
 import com.twu.biblioteca.repository.BookRepository;
+import com.twu.biblioteca.repository.MovieMemoryRepository;
+import com.twu.biblioteca.repository.MovieRepository;
 import com.twu.biblioteca.service.BookService;
+import com.twu.biblioteca.service.MovieService;
 
 import java.util.Scanner;
 
@@ -36,13 +41,16 @@ public class BibliotecaApp {
     }
 
     private void init() {
-        BookRepository bookRepository = initRepository();
+        BookRepository bookRepository = initBookRepository();
         BookService bookService = new BookService(bookRepository);
 
-        executor = new Executor(bookService);
+        MovieRepository movieRepository = initMovieRepository();
+        MovieService movieService = new MovieService(movieRepository);
+
+        executor = new Executor(bookService, movieService);
     }
 
-    private BookRepository initRepository() {
+    private BookRepository initBookRepository() {
         BookRepository bookRepository = new BookMemoryRepository();
 
         bookRepository.add(new Book("book1", "author1", 2010));
@@ -50,6 +58,16 @@ public class BibliotecaApp {
         bookRepository.add(new Book("book3", "author3", 2013));
 
         return bookRepository;
+    }
+
+    private MovieRepository initMovieRepository() {
+        MovieRepository movieRepository = new MovieMemoryRepository();
+
+        movieRepository.add(new Movie("movie1", "director1", 2016, Rating.ONE));
+        movieRepository.add(new Movie("movie2", "director2", 2017, Rating.NONE));
+        movieRepository.add(new Movie("movie3", "director3", 2015, Rating.THREE));
+
+        return movieRepository;
     }
 
     public static String welcome() {

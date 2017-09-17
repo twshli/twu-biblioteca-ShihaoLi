@@ -16,9 +16,9 @@ public class ReturnBookHandler implements CommandHandler {
     @Override
     public ExecResult handle(String title) {
         if (bookService.returnBook(title)) {
-            return new ExecResult(State.MAIN_MENU, Message.ALERT_RETURN_SUCCESS + "\n" + Message.MAIN_MENU);
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_RETURN_BOOK_SUCCESS + "\n" + Message.MAIN_MENU);
         } else {
-            return new ExecResult(State.RETURN_BOOK, Message.ALERT_RETURN_FAILURE);
+            return new ExecResult(State.RETURN_BOOK, Message.ALERT_RETURN_BOOK_FAILURE);
         }
     }
 }

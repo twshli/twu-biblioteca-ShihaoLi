@@ -2,7 +2,10 @@ package com.twu.biblioteca.command;
 
 import com.twu.biblioteca.command.handler.MenuOption;
 import com.twu.biblioteca.model.Book;
+import com.twu.biblioteca.model.Movie;
+import com.twu.biblioteca.model.Rating;
 import com.twu.biblioteca.service.BookService;
+import com.twu.biblioteca.service.MovieService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,6 +24,8 @@ public class ExecutorTest {
 
     @Mock
     private BookService bookService;
+    @Mock
+    private MovieService movieService;
 
     @InjectMocks
     private Executor executor;
@@ -71,7 +76,7 @@ public class ExecutorTest {
     public void should_return_alert_message_when_select_checkout_option_in_main_menu() throws Exception {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.CHECKOUT_BOOK);
 
-        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT));
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_BOOK));
     }
 
     @Test
@@ -80,7 +85,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.CHECKOUT_BOOK, "book_1");
 
-        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_SUCCESS + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_BOOK_SUCCESS + "\n" + Message.MAIN_MENU));
     }
 
     @Test
@@ -89,14 +94,14 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.CHECKOUT_BOOK,"book_xx");
 
-        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_FAILURE));
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_BOOK_FAILURE));
     }
 
     @Test
     public void should_return_alert_message_when_select_return_option_in_main_menu() throws Exception {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.RETURN_BOOK);
 
-        assertThat(result.getMessage(), is(Message.ALERT_RETURN));
+        assertThat(result.getMessage(), is(Message.ALERT_RETURN_BOOK));
     }
 
     @Test
@@ -105,7 +110,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.RETURN_BOOK, "book_1");
 
-        assertThat(result.getMessage(), is(Message.ALERT_RETURN_SUCCESS + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage(), is(Message.ALERT_RETURN_BOOK_SUCCESS + "\n" + Message.MAIN_MENU));
     }
 
     @Test
@@ -114,6 +119,27 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.RETURN_BOOK, "book_1");
 
-        assertThat(result.getMessage(), is(Message.ALERT_RETURN_FAILURE));
+        assertThat(result.getMessage(), is(Message.ALERT_RETURN_BOOK_FAILURE));
+    }
+
+    @Test
+    public void should_return_alert_message_and_main_menu_when_select_list_movies_with_no_available_movies_in_main_menu() throws Exception {
+        when(movieService.getAllAvailMovies()).thenReturn(new ArrayList<>());
+
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_MOVIES);
+
+        assertThat(result.getMessage(), is(Message.ALERT_NO_AVAIL_MOVIES + "\n" + Message.MAIN_MENU));
+    }
+
+    @Test
+    public void should_return_movies_info_and_main_menu_when_select_list_movies_with_available_movies_in_main_menu() throws Exception {
+        when(movieService.getAllAvailMovies()).thenReturn(Collections.singletonList(
+                new Movie("movie_1", "director_1", 2016, Rating.ONE)
+        ));
+
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_MOVIES);
+
+        String expected = "| movie_1 | director_1 | 2016 | 1 |\n" + Message.MAIN_MENU;
+        assertThat(result.getMessage(), is(expected));
     }
 }

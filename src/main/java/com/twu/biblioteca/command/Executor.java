@@ -7,13 +7,16 @@ import com.twu.biblioteca.command.handler.MainMenuHandler;
 import com.twu.biblioteca.command.handler.QuitAppHandler;
 import com.twu.biblioteca.command.handler.ReturnBookHandler;
 import com.twu.biblioteca.service.BookService;
+import com.twu.biblioteca.service.MovieService;
 
 public class Executor {
 
     private BookService bookService;
+    private MovieService movieService;
 
-    public Executor(BookService bookService) {
+    public Executor(BookService bookService, MovieService movieService) {
         this.bookService = bookService;
+        this.movieService = movieService;
     }
 
     public ExecResult exec(String curState, String param) {
@@ -26,7 +29,7 @@ public class Executor {
                 return new InitAppHandler();
 
             case State.MAIN_MENU:
-                return new MainMenuHandler(bookService);
+                return new MainMenuHandler(bookService, movieService);
 
             case State.CHECKOUT_BOOK:
                 return new CheckoutBookHandler(bookService);

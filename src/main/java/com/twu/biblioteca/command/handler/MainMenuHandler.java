@@ -4,17 +4,22 @@ import com.twu.biblioteca.command.ExecResult;
 import com.twu.biblioteca.command.Message;
 import com.twu.biblioteca.command.State;
 import com.twu.biblioteca.model.Book;
+import com.twu.biblioteca.model.Movie;
 import com.twu.biblioteca.service.BookService;
+import com.twu.biblioteca.service.MovieService;
 import com.twu.biblioteca.util.BookInfoBuilder;
+import com.twu.biblioteca.util.MovieInfoBuilder;
 
 import java.util.List;
 
 public class MainMenuHandler implements CommandHandler {
 
     private BookService bookService;
+    private MovieService movieService;
 
-    public MainMenuHandler(BookService bookService) {
+    public MainMenuHandler(BookService bookService, MovieService movieService) {
         this.bookService = bookService;
+        this.movieService = movieService;
     }
 
     @Override
@@ -28,6 +33,9 @@ public class MainMenuHandler implements CommandHandler {
 
             case MenuOption.RETURN_BOOK:
                 return execReturnBookCommand();
+
+            case MenuOption.LIST_MOVIES:
+                return execListMoviesCommand();
 
             case MenuOption.QUIT_APP:
                 return execQuitAppCommand();
@@ -47,11 +55,20 @@ public class MainMenuHandler implements CommandHandler {
     }
 
     private ExecResult execCheckoutBookCommand() {
-        return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT);
+        return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT_BOOK);
     }
 
     private ExecResult execReturnBookCommand() {
-        return new ExecResult(State.RETURN_BOOK, Message.ALERT_RETURN);
+        return new ExecResult(State.RETURN_BOOK, Message.ALERT_RETURN_BOOK);
+    }
+
+    private ExecResult execListMoviesCommand() {
+        List<Movie> movies = movieService.getAllAvailMovies();
+
+        String moviesInfo = (movies.isEmpty() ? Message.ALERT_NO_AVAIL_MOVIES
+                : MovieInfoBuilder.generate(movies));
+
+        return new ExecResult(State.MAIN_MENU, moviesInfo + "\n" + Message.MAIN_MENU);
     }
 
     private ExecResult execQuitAppCommand() {
