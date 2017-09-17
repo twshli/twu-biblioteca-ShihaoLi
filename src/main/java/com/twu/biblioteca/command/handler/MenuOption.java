@@ -1,8 +1,5 @@
 package com.twu.biblioteca.command.handler;
 
-/**
- * Created by Shli on 12/09/2017.
- */
 public class MenuOption {
 
     public static final String LIST_BOOKS = "1";

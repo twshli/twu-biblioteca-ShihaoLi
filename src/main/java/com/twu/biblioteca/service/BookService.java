@@ -5,9 +5,6 @@ import com.twu.biblioteca.repository.BookRepository;
 
 import java.util.List;
 
-/**
- * Created by Shli on 10/09/2017.
- */
 public class BookService {
 
     private BookRepository bookRepository;

@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created by Shli on 10/09/2017.
- */
 public class BookMemoryRepository implements BookRepository {
 
     private Map<String, Book> books = new HashMap<>();

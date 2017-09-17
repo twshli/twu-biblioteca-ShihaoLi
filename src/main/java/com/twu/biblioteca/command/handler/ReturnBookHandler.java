@@ -5,9 +5,6 @@ import com.twu.biblioteca.command.Message;
 import com.twu.biblioteca.command.State;
 import com.twu.biblioteca.service.BookService;
 
-/**
- * Created by Shli on 15/09/2017.
- */
 public class ReturnBookHandler implements CommandHandler {
 
     private BookService bookService;

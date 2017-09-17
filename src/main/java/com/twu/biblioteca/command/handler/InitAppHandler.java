@@ -4,9 +4,6 @@ import com.twu.biblioteca.command.ExecResult;
 import com.twu.biblioteca.command.Message;
 import com.twu.biblioteca.command.State;
 
-/**
- * Created by Shli on 14/09/2017.
- */
 public class InitAppHandler implements CommandHandler {
 
     @Override

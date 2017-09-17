@@ -12,9 +12,6 @@ import java.util.stream.Collectors;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by Shli on 10/09/2017.
- */
 public class BookServiceTest {
 
     private BookService bookService;

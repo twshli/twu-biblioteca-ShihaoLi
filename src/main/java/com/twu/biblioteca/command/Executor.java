@@ -8,9 +8,6 @@ import com.twu.biblioteca.command.handler.QuitAppHandler;
 import com.twu.biblioteca.command.handler.ReturnBookHandler;
 import com.twu.biblioteca.service.BookService;
 
-/**
- * Created by Shli on 12/09/2017.
- */
 public class Executor {
 
     private BookService bookService;

@@ -1,8 +1,5 @@
 package com.twu.biblioteca.command;
 
-/**
- * Created by Shli on 14/09/2017.
- */
 public class State {
 
     public static final String INIT_APP = "STATE_INIT_APP";

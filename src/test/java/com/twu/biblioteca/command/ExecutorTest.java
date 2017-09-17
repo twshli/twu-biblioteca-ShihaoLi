@@ -16,9 +16,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by Shli on 12/09/2017.
- */
 @RunWith(MockitoJUnitRunner.class)
 public class ExecutorTest {
 

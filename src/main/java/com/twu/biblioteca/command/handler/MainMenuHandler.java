@@ -9,9 +9,6 @@ import com.twu.biblioteca.util.BookInfoBuilder;
 
 import java.util.List;
 
-/**
- * Created by Shli on 14/09/2017.
- */
 public class MainMenuHandler implements CommandHandler {
 
     private BookService bookService;
