@@ -19,9 +19,10 @@ public class BookInfoBuilderTest {
                 new Book("book_3", "author_3", 2012)
         );
 
-        String booksInfo = "| book_1 | author_1 | 2010 |\n"
-                + "| book_2 | author_2 | 2014 |\n"
-                + "| book_3 | author_3 | 2012 |";
+        String booksInfo =
+                "| book_1 | author_1 | 2010 |\n" +
+                "| book_2 | author_2 | 2014 |\n" +
+                "| book_3 | author_3 | 2012 |";
 
         assertThat(BookInfoBuilder.generate(books), is(booksInfo));
     }
