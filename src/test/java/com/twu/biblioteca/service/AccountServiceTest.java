@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class AccountServiceTest {
@@ -35,5 +37,15 @@ public class AccountServiceTest {
     @Test
     public void should_fail_to_authenticate_username_with_invalid_password() throws Exception {
         assertThat(accountService.authenticate("biblioteca-001", "passwordxx"), is(false));
+    }
+
+    @Test
+    public void should_return_account_for_valid_library_number() throws Exception {
+        assertNotNull(accountService.getAccount("biblioteca-001"));
+    }
+
+    @Test
+    public void should_return_null_account_for_invalid_library_number() throws Exception {
+        assertNull(accountService.getAccount("biblioteca-xxx"));
     }
 }

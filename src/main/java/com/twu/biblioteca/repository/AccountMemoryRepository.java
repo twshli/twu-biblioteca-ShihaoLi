@@ -19,4 +19,9 @@ public class AccountMemoryRepository implements AccountRepository {
         Account account = accounts.get(libraryNumber);
         return (account != null && account.getPassword().equals(password));
     }
+
+    @Override
+    public Account findByLibraryNumber(String libraryNumber) {
+        return accounts.get(libraryNumber);
+    }
 }

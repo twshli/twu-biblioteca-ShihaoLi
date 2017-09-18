@@ -1,5 +1,6 @@
 package com.twu.biblioteca.service;
 
+import com.twu.biblioteca.model.Account;
 import com.twu.biblioteca.repository.AccountRepository;
 
 public class AccountService {
@@ -12,5 +13,9 @@ public class AccountService {
 
     public boolean authenticate(String libraryNumber, String password) {
         return accountRepository.existsByLibraryNumberAndPassword(libraryNumber, password);
+    }
+
+    public Account getAccount(String libraryNumber) {
+        return accountRepository.findByLibraryNumber(libraryNumber);
     }
 }

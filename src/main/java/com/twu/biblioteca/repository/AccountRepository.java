@@ -6,5 +6,7 @@ public interface AccountRepository {
 
     void add(Account account);
 
+    Account findByLibraryNumber(String libraryNumber);
+
     boolean existsByLibraryNumberAndPassword(String libraryNumber, String password);
 }
