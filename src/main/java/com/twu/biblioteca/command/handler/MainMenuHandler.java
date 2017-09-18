@@ -1,6 +1,7 @@
 package com.twu.biblioteca.command.handler;
 
 import com.twu.biblioteca.command.ExecResult;
+import com.twu.biblioteca.command.LoginManager;
 import com.twu.biblioteca.command.Message;
 import com.twu.biblioteca.command.State;
 import com.twu.biblioteca.model.Book;
@@ -52,7 +53,11 @@ public class MainMenuHandler implements CommandHandler {
     }
 
     private ExecResult execLoginCommand() {
-        return new ExecResult(State.LOGIN, Message.ALERT_LOGIN);
+        if (LoginManager.getInstance().isLoggedIn()) {
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_ALREADY_LOGIN + "\n" + Message.MAIN_MENU);
+        } else {
+            return new ExecResult(State.LOGIN, Message.ALERT_LOGIN);
+        }
     }
 
     private ExecResult execListBooksCommand() {
@@ -65,11 +70,19 @@ public class MainMenuHandler implements CommandHandler {
     }
 
     private ExecResult execCheckoutBookCommand() {
-        return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT_BOOK);
+        if (LoginManager.getInstance().isLoggedIn()) {
+            return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT_BOOK);
+        } else {
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_NOT_LOGIN + "\n" + Message.MAIN_MENU);
+        }
     }
 
     private ExecResult execReturnBookCommand() {
-        return new ExecResult(State.RETURN_BOOK, Message.ALERT_RETURN_BOOK);
+        if (LoginManager.getInstance().isLoggedIn()) {
+            return new ExecResult(State.RETURN_BOOK, Message.ALERT_RETURN_BOOK);
+        } else {
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_NOT_LOGIN + "\n" + Message.MAIN_MENU);
+        }
     }
 
     private ExecResult execListMoviesCommand() {

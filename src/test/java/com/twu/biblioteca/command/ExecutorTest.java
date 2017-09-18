@@ -96,6 +96,14 @@ public class ExecutorTest {
     }
 
     @Test
+    public void should_return_alert_message_and_main_menu_when_select_checkout_option_without_login() throws Exception {
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.CHECKOUT_BOOK);
+
+        assertThat(result.getState(), is(State.MAIN_MENU));
+        assertThat(result.getMessage(), is(Message.ALERT_NOT_LOGIN + "\n" + Message.MAIN_MENU));
+    }
+
+    @Test
     public void should_return_success_message_and_main_menu_after_checkout_a_book() throws Exception {
         when(bookService.checkoutBook("book_1")).thenReturn(true);
 
@@ -123,6 +131,14 @@ public class ExecutorTest {
 
         assertThat(result.getState(), is(State.RETURN_BOOK));
         assertThat(result.getMessage(), is(Message.ALERT_RETURN_BOOK));
+    }
+
+    @Test
+    public void should_return_alert_message_and_main_menu_when_select_return_option_without_login() throws Exception {
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.RETURN_BOOK);
+
+        assertThat(result.getState(), is(State.MAIN_MENU));
+        assertThat(result.getMessage(), is(Message.ALERT_NOT_LOGIN + "\n" + Message.MAIN_MENU));
     }
 
     @Test
@@ -202,6 +218,16 @@ public class ExecutorTest {
 
         assertThat(result.getState(), is(State.LOGIN));
         assertThat(result.getMessage(), is(Message.ALERT_LOGIN));
+    }
+
+    @Test
+    public void should_return_alert_message_and_main_menu_when_select_login_with_already_login() throws Exception {
+        LoginManagerTestUtil.assumeLoginWithLibraryNumber("biblioteca-001");
+
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LOGIN);
+
+        assertThat(result.getState(), is(State.MAIN_MENU));
+        assertThat(result.getMessage(), is(Message.ALERT_ALREADY_LOGIN + "\n" + Message.MAIN_MENU));
     }
 
     @Test

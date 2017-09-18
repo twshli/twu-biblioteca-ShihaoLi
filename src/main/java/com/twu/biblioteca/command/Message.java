@@ -34,4 +34,7 @@ public class Message {
     public static final String ALERT_LOGIN = "Input (library-number, password) to login: ";
     public static final String ALERT_LOGIN_SUCCESS = "Login successfully!";
     public static final String ALERT_LOGIN_FAILURE = "Fail to login.";
+
+    public static final String ALERT_NOT_LOGIN = "You are not logged in. Please log in first.";
+    public static final String ALERT_ALREADY_LOGIN = "You are already logged in.";
 }
