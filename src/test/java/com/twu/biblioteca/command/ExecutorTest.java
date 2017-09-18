@@ -142,4 +142,29 @@ public class ExecutorTest {
         String expected = "| movie_1 | director_1 | 2016 | 1 |\n" + Message.MAIN_MENU;
         assertThat(result.getMessage(), is(expected));
     }
+
+    @Test
+    public void should_return_alert_message_when_select_checkout_movie_in_main_menu() throws Exception {
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.CHECKOUT_MOVIE);
+
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_MOVIE));
+    }
+
+    @Test
+    public void should_return_success_message_and_main_menu_after_checkout_a_movie() throws Exception {
+        when(movieService.checkoutMovie("movie_1")).thenReturn(true);
+
+        ExecResult result = executor.exec(State.CHECKOUT_MOVIE, "movie_1");
+
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_MOVIE_SUCCESS + "\n" + Message.MAIN_MENU));
+    }
+
+    @Test
+    public void should_return_alert_message_after_fail_to_checkout_a_movie() throws Exception {
+        when(movieService.checkoutMovie("movie_1")).thenReturn(false);
+
+        ExecResult result = executor.exec(State.CHECKOUT_MOVIE, "movie_1");
+
+        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_MOVIE_FAILURE));
+    }
 }

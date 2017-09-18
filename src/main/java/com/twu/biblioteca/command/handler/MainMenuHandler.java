@@ -37,6 +37,9 @@ public class MainMenuHandler implements CommandHandler {
             case MenuOption.LIST_MOVIES:
                 return execListMoviesCommand();
 
+            case MenuOption.CHECKOUT_MOVIE:
+                return execCheckoutMovieCommand();
+
             case MenuOption.QUIT_APP:
                 return execQuitAppCommand();
 
@@ -69,6 +72,10 @@ public class MainMenuHandler implements CommandHandler {
                 : MovieInfoBuilder.generate(movies));
 
         return new ExecResult(State.MAIN_MENU, moviesInfo + "\n" + Message.MAIN_MENU);
+    }
+
+    private ExecResult execCheckoutMovieCommand() {
+        return new ExecResult(State.CHECKOUT_MOVIE, Message.ALERT_CHECKOUT_MOVIE);
     }
 
     private ExecResult execQuitAppCommand() {

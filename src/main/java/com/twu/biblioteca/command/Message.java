@@ -9,14 +9,15 @@ public class Message {
             "2. Checkout Book\n" +
             "3. Return Book\n" +
             "4. List Movies\n" +
-            "5. Quit";
+            "5. Checkout Movie\n" +
+            "6. Quit";
 
     public static final String ALERT_SELECT_VALID_OPTION = "Select a valid option!";
 
     public static final String ALERT_NO_AVAIL_BOOKS = "No available books in library!";
 
     public static final String ALERT_CHECKOUT_BOOK = "Input title of book to checkout: ";
-    public static final String ALERT_CHECKOUT_BOOK_SUCCESS = "Thank you! Enjoy the book!";
+    public static final String ALERT_CHECKOUT_BOOK_SUCCESS = "Thank you! Enjoy the book.";
     public static final String ALERT_CHECKOUT_BOOK_FAILURE = "That book is not available.";
 
     public static final String ALERT_RETURN_BOOK = "Input title of book to return: ";
@@ -24,4 +25,8 @@ public class Message {
     public static final String ALERT_RETURN_BOOK_FAILURE = "That is not a valid book to return.";
 
     public static final String ALERT_NO_AVAIL_MOVIES = "No available movies in library!";
+
+    public static final String ALERT_CHECKOUT_MOVIE = "Input title of movie to checkout: ";
+    public static final String ALERT_CHECKOUT_MOVIE_SUCCESS = "Thank you! Enjoy the movie.";
+    public static final String ALERT_CHECKOUT_MOVIE_FAILURE = "That movie is not available.";
 }

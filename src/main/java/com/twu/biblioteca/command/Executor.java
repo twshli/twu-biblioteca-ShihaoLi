@@ -1,6 +1,7 @@
 package com.twu.biblioteca.command;
 
 import com.twu.biblioteca.command.handler.CheckoutBookHandler;
+import com.twu.biblioteca.command.handler.CheckoutMovieHandler;
 import com.twu.biblioteca.command.handler.CommandHandler;
 import com.twu.biblioteca.command.handler.InitAppHandler;
 import com.twu.biblioteca.command.handler.MainMenuHandler;
@@ -36,6 +37,9 @@ public class Executor {
 
             case State.RETURN_BOOK:
                 return new ReturnBookHandler(bookService);
+
+            case State.CHECKOUT_MOVIE:
+                return new CheckoutMovieHandler(movieService);
 
             default:
                 return new QuitAppHandler();
