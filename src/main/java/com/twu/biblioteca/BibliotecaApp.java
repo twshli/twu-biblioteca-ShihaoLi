@@ -60,8 +60,8 @@ public class BibliotecaApp {
     private AccountRepository initAccountRepository() {
         AccountRepository accountRepository = new AccountMemoryRepository();
 
-        accountRepository.add(new Account("biblioteca-001", "password1"));
-        accountRepository.add(new Account("biblioteca-002", "password2"));
+        accountRepository.add(new Account("biblioteca-001", "password1", "name1", "e001@xxx.com", "123456"));
+        accountRepository.add(new Account("biblioteca-002", "password2", "name2", "e002@xxx.com", "123457"));
 
         return accountRepository;
     }

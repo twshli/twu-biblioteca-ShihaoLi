@@ -18,8 +18,8 @@ public class AccountServiceTest {
     @Before
     public void setUp() throws Exception {
         AccountRepository accountRepository = new AccountMemoryRepository();
-        accountRepository.add(new Account("biblioteca-001", "password1"));
-        accountRepository.add(new Account("biblioteca-002", "password2"));
+        accountRepository.add(new Account("biblioteca-001", "password1", "name1", "e1@xxx.com", "123456"));
+        accountRepository.add(new Account("biblioteca-002", "password2", "name2", "e2@xxx.com", "123457"));
 
         accountService = new AccountService(accountRepository);
     }
