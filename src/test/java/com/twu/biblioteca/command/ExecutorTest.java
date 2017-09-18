@@ -7,6 +7,7 @@ import com.twu.biblioteca.model.Rating;
 import com.twu.biblioteca.service.AccountService;
 import com.twu.biblioteca.service.BookService;
 import com.twu.biblioteca.service.MovieService;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,10 +34,16 @@ public class ExecutorTest {
     @InjectMocks
     private Executor executor;
 
+    @After
+    public void tearDown() throws Exception {
+        LoginManagerTestUtil.clearLogin();
+    }
+
     @Test
     public void should_enter_main_menu_after_init_the_app() throws Exception {
         ExecResult result = executor.exec(State.INIT_APP, "");
 
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.MAIN_MENU));
     }
 
@@ -44,6 +51,7 @@ public class ExecutorTest {
     public void should_return_alert_message_when_input_invalid_option_in_main_menu() throws Exception {
         ExecResult result = executor.exec(State.MAIN_MENU,"xxxx");
 
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_SELECT_VALID_OPTION));
     }
 
@@ -60,6 +68,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_BOOKS);
 
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_NO_AVAIL_BOOKS + "\n" + Message.MAIN_MENU));
     }
 
@@ -72,13 +81,17 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_BOOKS);
 
         String expected = "| book_1 | author_1 | 2012 |\n" + Message.MAIN_MENU;
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(expected));
     }
 
     @Test
     public void should_return_alert_message_when_select_checkout_option_in_main_menu() throws Exception {
+        LoginManagerTestUtil.assumeLoginWithLibraryNumber("biblioteca-001");
+
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.CHECKOUT_BOOK);
 
+        assertThat(result.getState(), is(State.CHECKOUT_BOOK));
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_BOOK));
     }
 
@@ -88,6 +101,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.CHECKOUT_BOOK, "book_1");
 
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_BOOK_SUCCESS + "\n" + Message.MAIN_MENU));
     }
 
@@ -97,13 +111,17 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.CHECKOUT_BOOK,"book_xx");
 
+        assertThat(result.getState(), is(State.CHECKOUT_BOOK));
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_BOOK_FAILURE));
     }
 
     @Test
     public void should_return_alert_message_when_select_return_option_in_main_menu() throws Exception {
+        LoginManagerTestUtil.assumeLoginWithLibraryNumber("biblioteca-001");
+
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.RETURN_BOOK);
 
+        assertThat(result.getState(), is(State.RETURN_BOOK));
         assertThat(result.getMessage(), is(Message.ALERT_RETURN_BOOK));
     }
 
@@ -113,6 +131,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.RETURN_BOOK, "book_1");
 
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_RETURN_BOOK_SUCCESS + "\n" + Message.MAIN_MENU));
     }
 
@@ -122,6 +141,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.RETURN_BOOK, "book_1");
 
+        assertThat(result.getState(), is(State.RETURN_BOOK));
         assertThat(result.getMessage(), is(Message.ALERT_RETURN_BOOK_FAILURE));
     }
 
@@ -131,6 +151,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_MOVIES);
 
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_NO_AVAIL_MOVIES + "\n" + Message.MAIN_MENU));
     }
 
@@ -143,6 +164,7 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_MOVIES);
 
         String expected = "| movie_1 | director_1 | 2016 | 1 |\n" + Message.MAIN_MENU;
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(expected));
     }
 
@@ -150,6 +172,7 @@ public class ExecutorTest {
     public void should_return_alert_message_when_select_checkout_movie_in_main_menu() throws Exception {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.CHECKOUT_MOVIE);
 
+        assertThat(result.getState(), is(State.CHECKOUT_MOVIE));
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_MOVIE));
     }
 
@@ -159,6 +182,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.CHECKOUT_MOVIE, "movie_1");
 
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_MOVIE_SUCCESS + "\n" + Message.MAIN_MENU));
     }
 
@@ -168,6 +192,7 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.CHECKOUT_MOVIE, "movie_1");
 
+        assertThat(result.getState(), is(State.CHECKOUT_MOVIE));
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_MOVIE_FAILURE));
     }
 
@@ -175,6 +200,7 @@ public class ExecutorTest {
     public void should_return_alert_message_when_select_login_in_main_menu() throws Exception {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LOGIN);
 
+        assertThat(result.getState(), is(State.LOGIN));
         assertThat(result.getMessage(), is(Message.ALERT_LOGIN));
     }
 
@@ -184,6 +210,8 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.LOGIN, "biblioteca-001, password");
 
+        assertThat(LoginManager.getInstance().isLoggedIn(), is(true));
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_LOGIN_SUCCESS + "\n" + Message.MAIN_MENU));
     }
 
@@ -193,6 +221,8 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.LOGIN, "biblioteca-001, password");
 
+        assertThat(LoginManager.getInstance().isLoggedIn(), is(false));
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU));
     }
 
@@ -200,6 +230,8 @@ public class ExecutorTest {
     public void should_return_alert_message_and_main_menu_after_input_account_with_invalid_format() throws Exception {
         ExecResult result = executor.exec(State.LOGIN, "biblioteca-001 password");
 
+        assertThat(LoginManager.getInstance().isLoggedIn(), is(false));
+        assertThat(result.getState(), is(State.MAIN_MENU));
         assertThat(result.getMessage(), is(Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU));
     }
 }
