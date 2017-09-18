@@ -5,12 +5,13 @@ public class Message {
     public static final String WELCOME = "Hello, welcome to Biblioteca system!";
 
     public static final String MAIN_MENU =
-            "1. List Books\n" +
-            "2. Checkout Book\n" +
-            "3. Return Book\n" +
-            "4. List Movies\n" +
-            "5. Checkout Movie\n" +
-            "6. Quit";
+            "1. Login\n" +
+            "2. List Books\n" +
+            "3. Checkout Book\n" +
+            "4. Return Book\n" +
+            "5. List Movies\n" +
+            "6. Checkout Movie\n" +
+            "7. Quit";
 
     public static final String ALERT_SELECT_VALID_OPTION = "Select a valid option!";
 
@@ -29,4 +30,8 @@ public class Message {
     public static final String ALERT_CHECKOUT_MOVIE = "Input title of movie to checkout: ";
     public static final String ALERT_CHECKOUT_MOVIE_SUCCESS = "Thank you! Enjoy the movie.";
     public static final String ALERT_CHECKOUT_MOVIE_FAILURE = "That movie is not available.";
+
+    public static final String ALERT_LOGIN = "Input (username, password) to login: ";
+    public static final String ALERT_LOGIN_SUCCESS = "Login successfully!";
+    public static final String ALERT_LOGIN_FAILURE = "Fail to login.";
 }

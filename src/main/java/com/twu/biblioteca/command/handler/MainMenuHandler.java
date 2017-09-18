@@ -25,6 +25,9 @@ public class MainMenuHandler implements CommandHandler {
     @Override
     public ExecResult handle(String command) {
         switch (command) {
+            case MenuOption.LOGIN:
+                return execLoginCommand();
+
             case MenuOption.LIST_BOOKS:
                 return execListBooksCommand();
 
@@ -46,6 +49,10 @@ public class MainMenuHandler implements CommandHandler {
             default:
                 return execInvalidCommand();
         }
+    }
+
+    private ExecResult execLoginCommand() {
+        return new ExecResult(State.LOGIN, Message.ALERT_LOGIN);
     }
 
     private ExecResult execListBooksCommand() {

@@ -4,13 +4,17 @@ import com.twu.biblioteca.command.ExecResult;
 import com.twu.biblioteca.command.Executor;
 import com.twu.biblioteca.command.Message;
 import com.twu.biblioteca.command.State;
+import com.twu.biblioteca.model.Account;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.Movie;
 import com.twu.biblioteca.model.Rating;
+import com.twu.biblioteca.repository.AccountMemoryRepository;
+import com.twu.biblioteca.repository.AccountRepository;
 import com.twu.biblioteca.repository.BookMemoryRepository;
 import com.twu.biblioteca.repository.BookRepository;
 import com.twu.biblioteca.repository.MovieMemoryRepository;
 import com.twu.biblioteca.repository.MovieRepository;
+import com.twu.biblioteca.service.AccountService;
 import com.twu.biblioteca.service.BookService;
 import com.twu.biblioteca.service.MovieService;
 
@@ -41,13 +45,25 @@ public class BibliotecaApp {
     }
 
     private void init() {
+        AccountRepository accountRepository = initAccountRepository();
+        AccountService accountService = new AccountService(accountRepository);
+
         BookRepository bookRepository = initBookRepository();
         BookService bookService = new BookService(bookRepository);
 
         MovieRepository movieRepository = initMovieRepository();
         MovieService movieService = new MovieService(movieRepository);
 
-        executor = new Executor(bookService, movieService);
+        executor = new Executor(bookService, movieService, accountService);
+    }
+
+    private AccountRepository initAccountRepository() {
+        AccountRepository accountRepository = new AccountMemoryRepository();
+
+        accountRepository.add(new Account("biblioteca-user1", "password1"));
+        accountRepository.add(new Account("biblioteca-user2", "password2"));
+
+        return accountRepository;
     }
 
     private BookRepository initBookRepository() {

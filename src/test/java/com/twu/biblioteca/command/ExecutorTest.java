@@ -4,6 +4,7 @@ import com.twu.biblioteca.command.handler.MenuOption;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.Movie;
 import com.twu.biblioteca.model.Rating;
+import com.twu.biblioteca.service.AccountService;
 import com.twu.biblioteca.service.BookService;
 import com.twu.biblioteca.service.MovieService;
 import org.junit.Test;
@@ -26,6 +27,8 @@ public class ExecutorTest {
     private BookService bookService;
     @Mock
     private MovieService movieService;
+    @Mock
+    private AccountService accountService;
 
     @InjectMocks
     private Executor executor;
@@ -166,5 +169,37 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.CHECKOUT_MOVIE, "movie_1");
 
         assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_MOVIE_FAILURE));
+    }
+
+    @Test
+    public void should_return_alert_message_when_select_login_in_main_menu() throws Exception {
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LOGIN);
+
+        assertThat(result.getMessage(), is(Message.ALERT_LOGIN));
+    }
+
+    @Test
+    public void should_return_success_message_and_main_menu_after_login() throws Exception {
+        when(accountService.authenticate("username", "password")).thenReturn(true);
+
+        ExecResult result = executor.exec(State.LOGIN, "username, password");
+
+        assertThat(result.getMessage(), is(Message.ALERT_LOGIN_SUCCESS + "\n" + Message.MAIN_MENU));
+    }
+
+    @Test
+    public void should_return_alert_message_and_main_menu_after_fail_to_login() throws Exception {
+        when(accountService.authenticate("username", "password")).thenReturn(false);
+
+        ExecResult result = executor.exec(State.LOGIN, "username, password");
+
+        assertThat(result.getMessage(), is(Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU));
+    }
+
+    @Test
+    public void should_return_alert_message_and_main_menu_after_input_account_with_invalid_format() throws Exception {
+        ExecResult result = executor.exec(State.LOGIN, "username password");
+
+        assertThat(result.getMessage(), is(Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU));
     }
 }

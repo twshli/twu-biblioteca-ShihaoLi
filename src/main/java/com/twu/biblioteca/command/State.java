@@ -7,6 +7,8 @@ public class State {
 
     public static final String MAIN_MENU = "STATE_MAIN_MENU";
 
+    public static final String LOGIN = "STATE_LOGIN";
+
     public static final String CHECKOUT_BOOK = "STATE_CHECKOUT_BOOK";
     public static final String RETURN_BOOK = "STATE_RETURN_BOOK";
 
