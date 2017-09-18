@@ -6,5 +6,5 @@ public interface AccountRepository {
 
     void add(Account account);
 
-    boolean existsByUsernameAndPassword(String username, String password);
+    boolean existsByLibraryNumberAndPassword(String libraryNumber, String password);
 }

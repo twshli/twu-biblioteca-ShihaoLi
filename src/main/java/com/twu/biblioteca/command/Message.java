@@ -31,7 +31,7 @@ public class Message {
     public static final String ALERT_CHECKOUT_MOVIE_SUCCESS = "Thank you! Enjoy the movie.";
     public static final String ALERT_CHECKOUT_MOVIE_FAILURE = "That movie is not available.";
 
-    public static final String ALERT_LOGIN = "Input (username, password) to login: ";
+    public static final String ALERT_LOGIN = "Input (library-number, password) to login: ";
     public static final String ALERT_LOGIN_SUCCESS = "Login successfully!";
     public static final String ALERT_LOGIN_FAILURE = "Fail to login.";
 }

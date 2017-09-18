@@ -180,25 +180,25 @@ public class ExecutorTest {
 
     @Test
     public void should_return_success_message_and_main_menu_after_login() throws Exception {
-        when(accountService.authenticate("username", "password")).thenReturn(true);
+        when(accountService.authenticate("biblioteca-001", "password")).thenReturn(true);
 
-        ExecResult result = executor.exec(State.LOGIN, "username, password");
+        ExecResult result = executor.exec(State.LOGIN, "biblioteca-001, password");
 
         assertThat(result.getMessage(), is(Message.ALERT_LOGIN_SUCCESS + "\n" + Message.MAIN_MENU));
     }
 
     @Test
     public void should_return_alert_message_and_main_menu_after_fail_to_login() throws Exception {
-        when(accountService.authenticate("username", "password")).thenReturn(false);
+        when(accountService.authenticate("biblioteca-001", "password")).thenReturn(false);
 
-        ExecResult result = executor.exec(State.LOGIN, "username, password");
+        ExecResult result = executor.exec(State.LOGIN, "biblioteca-001, password");
 
         assertThat(result.getMessage(), is(Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU));
     }
 
     @Test
     public void should_return_alert_message_and_main_menu_after_input_account_with_invalid_format() throws Exception {
-        ExecResult result = executor.exec(State.LOGIN, "username password");
+        ExecResult result = executor.exec(State.LOGIN, "biblioteca-001 password");
 
         assertThat(result.getMessage(), is(Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU));
     }

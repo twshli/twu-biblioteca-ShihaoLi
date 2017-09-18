@@ -11,12 +11,12 @@ public class AccountMemoryRepository implements AccountRepository {
 
     @Override
     public void add(Account account) {
-        accounts.put(account.getUsername(), account);
+        accounts.put(account.getLibraryNumber(), account);
     }
 
     @Override
-    public boolean existsByUsernameAndPassword(String username, String password) {
-        Account account = accounts.get(username);
+    public boolean existsByLibraryNumberAndPassword(String libraryNumber, String password) {
+        Account account = accounts.get(libraryNumber);
         return (account != null && account.getPassword().equals(password));
     }
 }

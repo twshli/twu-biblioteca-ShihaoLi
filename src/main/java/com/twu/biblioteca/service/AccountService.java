@@ -10,7 +10,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public boolean authenticate(String username, String password) {
-        return accountRepository.existsByUsernameAndPassword(username, password);
+    public boolean authenticate(String libraryNumber, String password) {
+        return accountRepository.existsByLibraryNumberAndPassword(libraryNumber, password);
     }
 }

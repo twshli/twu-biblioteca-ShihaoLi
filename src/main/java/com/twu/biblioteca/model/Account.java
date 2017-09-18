@@ -2,16 +2,16 @@ package com.twu.biblioteca.model;
 
 public class Account {
 
-    private String username;
+    private String libraryNumber;
     private String password;
 
-    public Account(String username, String password) {
-        this.username = username;
+    public Account(String libraryNumber, String password) {
+        this.libraryNumber = libraryNumber;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getLibraryNumber() {
+        return libraryNumber;
     }
 
     public String getPassword() {

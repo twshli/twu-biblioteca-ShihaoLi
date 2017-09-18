@@ -15,23 +15,13 @@ public class LoginHandler implements CommandHandler {
     }
 
     @Override
-    public ExecResult handle(String param) {
-        Account account = parseAccount(param);
+    public ExecResult handle(String account) {
+        String fields[] = account.split(",");
 
-        if (account != null && accountService.authenticate(account.getUsername(), account.getPassword())) {
+        if ((fields.length == 2) && (accountService.authenticate(fields[0].trim(), fields[1].trim()))) {
             return new ExecResult(State.MAIN_MENU, Message.ALERT_LOGIN_SUCCESS + "\n" + Message.MAIN_MENU);
         } else {
             return new ExecResult(State.MAIN_MENU, Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU);
-        }
-    }
-
-    private Account parseAccount(String param) {
-        String[] fields = param.split(",");
-
-        if (fields.length == 2) {
-            return new Account(fields[0].trim(), fields[1].trim());
-        } else {
-            return null;
         }
     }
 }
