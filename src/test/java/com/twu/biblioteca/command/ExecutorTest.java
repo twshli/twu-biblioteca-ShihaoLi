@@ -1,6 +1,7 @@
 package com.twu.biblioteca.command;
 
 import com.twu.biblioteca.command.handler.MenuOption;
+import com.twu.biblioteca.model.Account;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.Movie;
 import com.twu.biblioteca.model.Rating;
@@ -290,8 +291,30 @@ public class ExecutorTest {
         assertThat(result.getMessage().contains(Message.MAIN_MENU_PART), is(true));
     }
 
+    @Test
+    public void should_return_user_info_and_main_menu_when_select_user_info_option_with_login() throws Exception {
+        LoginManagerTestUtil.assumeLoginWithLibraryNumber("biblioteca-001");
+        when(accountService.getAccount("biblioteca-001")).thenReturn(
+                new Account("biblioteca-001", "password", "name", "xxx@xxx.com", "123456")
+        );
+
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.USER_INFO);
+
+        String accountInfo = "| biblioteca-001 | name | xxx@xxx.com | 123456 |";
+        assertThat(result.getState(), is(State.MAIN_MENU));
+        assertThat(result.getMessage().contains(accountInfo), is(true));
+        assertThat(isMainMenuContained(result), is(true));
+    }
+
+    @Test
+    public void should_return_alert_invalid_option_message_when_select_user_info_option_without_login() throws Exception {
+        ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.USER_INFO);
+
+        assertThat(result.getMessage(), is(Message.ALERT_SELECT_VALID_OPTION));
+    }
+
     private boolean isMainMenuContained(ExecResult result) {
-        return (result.getMessage().contains(Message.MAIN_MENU_PART) 
+        return (result.getMessage().contains(Message.MAIN_MENU_PART)
                 || result.getMessage().contains(Message.MAIN_MENU_FULL));
     }
 }

@@ -6,8 +6,10 @@ import com.twu.biblioteca.command.Message;
 import com.twu.biblioteca.command.State;
 import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.model.Movie;
+import com.twu.biblioteca.service.AccountService;
 import com.twu.biblioteca.service.BookService;
 import com.twu.biblioteca.service.MovieService;
+import com.twu.biblioteca.util.AccountInfoBuilder;
 import com.twu.biblioteca.util.BookInfoBuilder;
 import com.twu.biblioteca.util.MovieInfoBuilder;
 
@@ -17,10 +19,12 @@ public class MainMenuHandler implements CommandHandler {
 
     private BookService bookService;
     private MovieService movieService;
+    private AccountService accountService;
 
-    public MainMenuHandler(BookService bookService, MovieService movieService) {
+    public MainMenuHandler(BookService bookService, MovieService movieService, AccountService accountService) {
         this.bookService = bookService;
         this.movieService = movieService;
+        this.accountService = accountService;
     }
 
     @Override
@@ -28,6 +32,9 @@ public class MainMenuHandler implements CommandHandler {
         switch (command) {
             case MenuOption.LOGIN:
                 return execLoginCommand();
+
+            case MenuOption.USER_INFO:
+                return execUserInfoCommand();
 
             case MenuOption.LIST_BOOKS:
                 return execListBooksCommand();
@@ -57,6 +64,17 @@ public class MainMenuHandler implements CommandHandler {
             return new ExecResult(State.MAIN_MENU, Message.ALERT_ALREADY_LOGIN + "\n" + MainMenu.getMenu());
         } else {
             return new ExecResult(State.LOGIN, Message.ALERT_LOGIN);
+        }
+    }
+
+    private ExecResult execUserInfoCommand() {
+        if (LoginManager.getInstance().isLoggedIn()) {
+            String accountInfo = AccountInfoBuilder.generate(
+                    accountService.getAccount(LoginManager.getInstance().getLibraryNumber()));
+
+            return new ExecResult(State.MAIN_MENU, accountInfo + "\n" + MainMenu.getMenu());
+        } else {
+            return execInvalidCommand();
         }
     }
 

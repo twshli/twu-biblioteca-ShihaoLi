@@ -34,7 +34,7 @@ public class Executor {
                 return new InitAppHandler();
 
             case State.MAIN_MENU:
-                return new MainMenuHandler(bookService, movieService);
+                return new MainMenuHandler(bookService, movieService, accountService);
 
             case State.LOGIN:
                 return new LoginHandler(accountService);

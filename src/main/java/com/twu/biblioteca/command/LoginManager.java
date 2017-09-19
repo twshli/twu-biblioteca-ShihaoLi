@@ -15,6 +15,10 @@ public class LoginManager {
         return instance;
     }
 
+    public String getLibraryNumber() {
+        return libraryNumber;
+    }
+
     public boolean isLoggedIn() {
         return loggedIn;
     }
