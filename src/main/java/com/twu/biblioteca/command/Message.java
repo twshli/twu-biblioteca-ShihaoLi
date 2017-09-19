@@ -4,14 +4,23 @@ public class Message {
 
     public static final String WELCOME = "Hello, welcome to Biblioteca system!";
 
-    public static final String MAIN_MENU =
+    public static final String MAIN_MENU_FULL =
             "1. Login\n" +
-            "2. List Books\n" +
-            "3. Checkout Book\n" +
-            "4. Return Book\n" +
-            "5. List Movies\n" +
-            "6. Checkout Movie\n" +
-            "7. Quit";
+            "2. User Information\n" +
+            "3. List Books\n" +
+            "4. Checkout Book\n" +
+            "5. Return Book\n" +
+            "6. List Movies\n" +
+            "7. Checkout Movie\n" +
+            "8. Quit";
+    public static final String MAIN_MENU_PART =
+            "1. Login\n" +
+            "3. List Books\n" +
+            "4. Checkout Book\n" +
+            "5. Return Book\n" +
+            "6. List Movies\n" +
+            "7. Checkout Movie\n" +
+            "8. Quit";
 
     public static final String ALERT_SELECT_VALID_OPTION = "Select a valid option!";
 

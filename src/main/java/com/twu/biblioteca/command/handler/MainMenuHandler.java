@@ -54,7 +54,7 @@ public class MainMenuHandler implements CommandHandler {
 
     private ExecResult execLoginCommand() {
         if (LoginManager.getInstance().isLoggedIn()) {
-            return new ExecResult(State.MAIN_MENU, Message.ALERT_ALREADY_LOGIN + "\n" + Message.MAIN_MENU);
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_ALREADY_LOGIN + "\n" + MainMenu.getMenu());
         } else {
             return new ExecResult(State.LOGIN, Message.ALERT_LOGIN);
         }
@@ -66,14 +66,14 @@ public class MainMenuHandler implements CommandHandler {
         String booksInfo = (books.isEmpty() ? Message.ALERT_NO_AVAIL_BOOKS
                 : BookInfoBuilder.generate(books));
 
-        return new ExecResult(State.MAIN_MENU, booksInfo + "\n" + Message.MAIN_MENU);
+        return new ExecResult(State.MAIN_MENU, booksInfo + "\n" + MainMenu.getMenu());
     }
 
     private ExecResult execCheckoutBookCommand() {
         if (LoginManager.getInstance().isLoggedIn()) {
             return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT_BOOK);
         } else {
-            return new ExecResult(State.MAIN_MENU, Message.ALERT_NOT_LOGIN + "\n" + Message.MAIN_MENU);
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_NOT_LOGIN + "\n" + MainMenu.getMenu());
         }
     }
 
@@ -81,7 +81,7 @@ public class MainMenuHandler implements CommandHandler {
         if (LoginManager.getInstance().isLoggedIn()) {
             return new ExecResult(State.RETURN_BOOK, Message.ALERT_RETURN_BOOK);
         } else {
-            return new ExecResult(State.MAIN_MENU, Message.ALERT_NOT_LOGIN + "\n" + Message.MAIN_MENU);
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_NOT_LOGIN + "\n" + MainMenu.getMenu());
         }
     }
 
@@ -91,7 +91,7 @@ public class MainMenuHandler implements CommandHandler {
         String moviesInfo = (movies.isEmpty() ? Message.ALERT_NO_AVAIL_MOVIES
                 : MovieInfoBuilder.generate(movies));
 
-        return new ExecResult(State.MAIN_MENU, moviesInfo + "\n" + Message.MAIN_MENU);
+        return new ExecResult(State.MAIN_MENU, moviesInfo + "\n" + MainMenu.getMenu());
     }
 
     private ExecResult execCheckoutMovieCommand() {

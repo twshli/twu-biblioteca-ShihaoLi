@@ -16,7 +16,7 @@ public class CheckoutBookHandler implements CommandHandler {
     @Override
     public ExecResult handle(String title) {
         if (bookService.checkoutBook(title)) {
-            return new ExecResult(State.MAIN_MENU, Message.ALERT_CHECKOUT_BOOK_SUCCESS + "\n" + Message.MAIN_MENU);
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_CHECKOUT_BOOK_SUCCESS + "\n" + MainMenu.getMenu());
         } else {
             return new ExecResult(State.CHECKOUT_BOOK, Message.ALERT_CHECKOUT_BOOK_FAILURE);
         }

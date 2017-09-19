@@ -19,7 +19,7 @@ public class CheckoutMovieHandler implements CommandHandler {
     @Override
     public ExecResult handle(String title) {
         if (movieService.checkoutMovie(title)) {
-            return new ExecResult(State.MAIN_MENU, Message.ALERT_CHECKOUT_MOVIE_SUCCESS + "\n" + Message.MAIN_MENU);
+            return new ExecResult(State.MAIN_MENU, Message.ALERT_CHECKOUT_MOVIE_SUCCESS + "\n" + MainMenu.getMenu());
         } else {
             return new ExecResult(State.CHECKOUT_MOVIE, Message.ALERT_CHECKOUT_MOVIE_FAILURE);
         }

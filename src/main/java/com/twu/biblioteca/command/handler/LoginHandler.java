@@ -24,10 +24,10 @@ public class LoginHandler implements CommandHandler {
 
             if (accountService.authenticate(libraryNumber, password)) {
                 LoginManager.getInstance().setLogin(libraryNumber);
-                return new ExecResult(State.MAIN_MENU, Message.ALERT_LOGIN_SUCCESS + "\n" + Message.MAIN_MENU);
+                return new ExecResult(State.MAIN_MENU, Message.ALERT_LOGIN_SUCCESS + "\n" + MainMenu.getMenu());
             }
         }
 
-        return new ExecResult(State.MAIN_MENU, Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU);
+        return new ExecResult(State.MAIN_MENU, Message.ALERT_LOGIN_FAILURE + "\n" + MainMenu.getMenu());
     }
 }

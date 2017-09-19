@@ -274,7 +274,24 @@ public class ExecutorTest {
         assertThat(isMainMenuContained(result), is(true));
     }
 
+    @Test
+    public void should_return_message_contains_full_main_menu_after_enter_main_menu_with_login() throws Exception {
+        LoginManagerTestUtil.assumeLoginWithLibraryNumber("biblioteca-001");
+
+        ExecResult result = executor.exec(State.INIT_APP, "");
+
+        assertThat(result.getMessage().contains(Message.MAIN_MENU_FULL), is(true));
+    }
+
+    @Test
+    public void should_return_message_contains_main_menu_without_user_info_option_after_enter_main_menu_without_login() throws Exception {
+        ExecResult result = executor.exec(State.INIT_APP, "");
+
+        assertThat(result.getMessage().contains(Message.MAIN_MENU_PART), is(true));
+    }
+
     private boolean isMainMenuContained(ExecResult result) {
-        return (result.getMessage().contains(Message.MAIN_MENU));
+        return (result.getMessage().contains(Message.MAIN_MENU_PART) 
+                || result.getMessage().contains(Message.MAIN_MENU_FULL));
     }
 }
