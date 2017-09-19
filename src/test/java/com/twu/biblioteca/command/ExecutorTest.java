@@ -44,7 +44,7 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.INIT_APP, "");
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.MAIN_MENU));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -69,7 +69,8 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_BOOKS);
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_NO_AVAIL_BOOKS + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_NO_AVAIL_BOOKS), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -80,9 +81,10 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_BOOKS);
 
-        String expected = "| book_1 | author_1 | 2012 |\n" + Message.MAIN_MENU;
+        String bookInfo = "| book_1 | author_1 | 2012 |";
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(expected));
+        assertThat(result.getMessage().contains(bookInfo), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -100,7 +102,8 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.CHECKOUT_BOOK);
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_NOT_LOGIN + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_NOT_LOGIN), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -110,7 +113,8 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.CHECKOUT_BOOK, "book_1");
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_BOOK_SUCCESS + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_CHECKOUT_BOOK_SUCCESS), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -138,7 +142,8 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.RETURN_BOOK);
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_NOT_LOGIN + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_NOT_LOGIN), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -148,7 +153,8 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.RETURN_BOOK, "book_1");
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_RETURN_BOOK_SUCCESS + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_RETURN_BOOK_SUCCESS), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -168,7 +174,8 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_MOVIES);
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_NO_AVAIL_MOVIES + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_NO_AVAIL_MOVIES), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -179,9 +186,10 @@ public class ExecutorTest {
 
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LIST_MOVIES);
 
-        String expected = "| movie_1 | director_1 | 2016 | 1 |\n" + Message.MAIN_MENU;
+        String movieInfo = "| movie_1 | director_1 | 2016 | 1 |";
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(expected));
+        assertThat(result.getMessage().contains(movieInfo), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -199,7 +207,8 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.CHECKOUT_MOVIE, "movie_1");
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_CHECKOUT_MOVIE_SUCCESS + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_CHECKOUT_MOVIE_SUCCESS), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -227,7 +236,8 @@ public class ExecutorTest {
         ExecResult result = executor.exec(State.MAIN_MENU, MenuOption.LOGIN);
 
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_ALREADY_LOGIN + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_ALREADY_LOGIN), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -238,7 +248,8 @@ public class ExecutorTest {
 
         assertThat(LoginManager.getInstance().isLoggedIn(), is(true));
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_LOGIN_SUCCESS + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_LOGIN_SUCCESS), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -249,7 +260,8 @@ public class ExecutorTest {
 
         assertThat(LoginManager.getInstance().isLoggedIn(), is(false));
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_LOGIN_FAILURE), is(true));
+        assertThat(isMainMenuContained(result), is(true));
     }
 
     @Test
@@ -258,6 +270,11 @@ public class ExecutorTest {
 
         assertThat(LoginManager.getInstance().isLoggedIn(), is(false));
         assertThat(result.getState(), is(State.MAIN_MENU));
-        assertThat(result.getMessage(), is(Message.ALERT_LOGIN_FAILURE + "\n" + Message.MAIN_MENU));
+        assertThat(result.getMessage().contains(Message.ALERT_LOGIN_FAILURE), is(true));
+        assertThat(isMainMenuContained(result), is(true));
+    }
+
+    private boolean isMainMenuContained(ExecResult result) {
+        return (result.getMessage().contains(Message.MAIN_MENU));
     }
 }
